@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Soutenances.iml" filepath="$PROJECT_DIR$/.idea/Soutenances.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Backend-GestionPFE.iml" filepath="$PROJECT_DIR$/.idea/Backend-GestionPFE.iml" />
     </modules>
   </component>
 </project>

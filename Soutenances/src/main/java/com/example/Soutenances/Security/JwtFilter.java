@@ -4,9 +4,18 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.util.Collections;
+
+@Component
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
 
@@ -24,7 +33,16 @@ public class JwtFilter extends OncePerRequestFilter {
             if (jwtUtil.validateToken(token)) {
                 String email = jwtUtil.extractEmail(token);
                 String role = jwtUtil.extractRole(token);
-                System.out.println("Utilisateur authentifié : " + email + " avec le rôle : " + role);
+
+                // 🔥 Ajouter l'utilisateur dans le contexte de sécurité
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        new User(email, "", Collections.singletonList(new SimpleGrantedAuthority(role))),
+                        null,
+                        Collections.singletonList(new SimpleGrantedAuthority(role))
+                );
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
 
