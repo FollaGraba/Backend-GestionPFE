@@ -1,5 +1,6 @@
 package com.example.Soutenances.Controllers;
 
+import com.example.Soutenances.Entities.Soutenances;
 import com.example.Soutenances.Services.ExcelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
@@ -38,4 +40,30 @@ public class ExcelController {
             return ResponseEntity.internalServerError().body("Erreur lors de l'importation du fichier.");
         }
     }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    @DeleteMapping("/soutenances/supprimer/{id}")
+    public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
+        excelService.deleteSoutenance(id);
+        return ResponseEntity.ok("Soutenance supprimée avec succès");
+    }
+
+
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    @PutMapping("/soutenances/president/{id}")
+    public ResponseEntity<?> updatePresident(@PathVariable Long id, @RequestParam String president) {
+        Optional<Soutenances> updatedSoutenance = excelService.updatePresident(id, president);
+        return updatedSoutenance.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    @PutMapping("/soutenances/rapporteur/{id}")
+    public ResponseEntity<?> updateRapporteur(@PathVariable Long id, @RequestParam String rapporteur) {
+        Optional<Soutenances> updatedSoutenance = excelService.updateRapporteur(id, rapporteur);
+        return updatedSoutenance.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 }

@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -76,7 +77,6 @@ public class ExcelService {
     }
 
 
-
     private void saveSoutenances(Sheet sheet) {
         Iterator<Row> rowIterator = sheet.iterator();
         rowIterator.next(); // Ignorer l'en-tête
@@ -122,6 +122,47 @@ public class ExcelService {
         }
 
     }
+
+    // Supprimer une soutenance par ID
+    public void deleteSoutenance(Long id) {
+        if (soutenancesRepository.existsById(id)) {
+            soutenancesRepository.deleteById(id);
+            logger.info("Soutenance supprimée avec succès : ID = " + id);
+        } else {
+            logger.warning("Suppression échouée, soutenance introuvable : ID = " + id);
+            throw new IllegalArgumentException("Soutenance introuvable !");
+        }
+    }
+    // Modifier le président du jury d'une soutenance
+    public Optional<Soutenances> updatePresident(Long id, String president) {
+        Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+        if (optionalSoutenance.isPresent()) {
+            Soutenances soutenance = optionalSoutenance.get();
+            soutenance.setPresident(president);
+            soutenancesRepository.save(soutenance);
+            logger.info("Président mis à jour avec succès : ID = " + id);
+        } else {
+            logger.warning("Modification échouée, soutenance introuvable : ID = " + id);
+            throw new IllegalArgumentException("Soutenance introuvable !");
+        }
+        return optionalSoutenance;
+    }
+
+    // Modifier le rapporteur d'une soutenance
+    public Optional<Soutenances> updateRapporteur(Long id, String rapporteur) {
+        Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+        if (optionalSoutenance.isPresent()) {
+            Soutenances soutenance = optionalSoutenance.get();
+            soutenance.setRapporteur(rapporteur);
+            soutenancesRepository.save(soutenance);
+            logger.info("Rapporteur mis à jour avec succès : ID = " + id);
+        } else {
+            logger.warning("Modification échouée, soutenance introuvable : ID = " + id);
+            throw new IllegalArgumentException("Soutenance introuvable !");
+        }
+        return optionalSoutenance;
+    }
+
 
 }
 

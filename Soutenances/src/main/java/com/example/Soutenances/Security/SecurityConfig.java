@@ -26,12 +26,12 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Désactiver CSRF pour Postman
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Routes publiques (ex: login, register)
-                        .requestMatchers("/api/excel/upload").hasAuthority("ADMINISTRATEUR") // 🔥 Seul ADMINISTRATEUR peut accéder
+                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter").permitAll() // Routes publiques (ex: login, register)
+                        .requestMatchers("/api/excel/upload", "/api/excel/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Pas de session
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 🔥 Ajouter JwtFilter avant la validation de connexion
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //  Ajouter JwtFilter avant la validation de connexion
 
         return http.build();
     }
@@ -40,4 +40,6 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 }
