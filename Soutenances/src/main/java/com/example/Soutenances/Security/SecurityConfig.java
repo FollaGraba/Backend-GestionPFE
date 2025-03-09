@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableMethodSecurity // Permet d'utiliser @PreAuthorize
@@ -20,13 +21,15 @@ public class SecurityConfig {
     public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
     }
+    // Mariem Tlatli : 3asslama maysam zidit il cors bach yaccepti il front w zidit il requete ali a3maliteha bach najouti fil base de données les soutenaces
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())) // ✅ Activer CORS
                 .csrf(csrf -> csrf.disable()) // Désactiver CSRF pour Postman
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter").permitAll() // Routes publiques (ex: login, register)
+                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll").permitAll() // Routes publiques (ex: login, register)
                         .requestMatchers("/api/excel/upload", "/api/excel/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
