@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> {
+    boolean existsById(int id);
 }
