@@ -29,8 +29,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())) // ✅ Activer CORS
                 .csrf(csrf -> csrf.disable()) // Désactiver CSRF pour Postman
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll").permitAll() // Routes publiques (ex: login, register)
-                        .requestMatchers("/api/excel/upload", "/api/excel/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
+                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll","/api/departement/**").permitAll() // Routes publiques (ex: login, register)
+                        .requestMatchers("/api/salles/**", "/api/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Pas de session

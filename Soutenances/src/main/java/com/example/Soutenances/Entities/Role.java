@@ -5,3 +5,4 @@ public enum Role {
     CHEF_DEPARTEMENT,
     ADMINISTRATEUR
 }
+

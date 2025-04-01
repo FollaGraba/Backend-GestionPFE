@@ -14,13 +14,13 @@ public class Soutenances {
         private Long id;
 
         @Column(name = "nom_etudiant", columnDefinition = "VARCHAR(255)")
-        private String nomEtudiant;
+        private String nom_etudiant;
 
         @Column(name = "email", columnDefinition = "VARCHAR(255)")
         private String email;
 
-        @Column(name = "titre", columnDefinition = "VARCHAR(255)")
-        private String titre;
+        @Column(name = "titre_sujet ", columnDefinition = "VARCHAR(255)")
+        private String titre_sujet;
 
         @Column(name = "encadrant", columnDefinition = "VARCHAR(255)")
         private String encadrant;
@@ -32,20 +32,24 @@ public class Soutenances {
         private String rapporteur;
 
         @Column(name = "date_soutenance", columnDefinition = "VARCHAR(255)")
-        private String date;
+        private String date_soutenance;
 
-        @Column(name = "heure", columnDefinition = "VARCHAR(255)")
-        private String heure;
+        @Column(name = "heure_soutenance", columnDefinition = "VARCHAR(255)")
+        private String heure_soutenance;
 
         @Column(name = "salle", columnDefinition = "VARCHAR(255)")
-        private String salle;
+        private String salle_soutenance;
+ @ManyToOne
+ @JoinColumn(name = "departement_id", nullable = false) // Use a foreign key for the relationship
+ private Departement departement;
+
 
  public void setId(Long id) {
   this.id = id;
  }
 
  public void setNomEtudiant(String nomEtudiant) {
-  this.nomEtudiant = nomEtudiant;
+  this.nom_etudiant = nomEtudiant;
  }
 
  public void setEmail(String email) {
@@ -53,7 +57,7 @@ public class Soutenances {
  }
 
  public void setTitre(String titre) {
-  this.titre = titre;
+  this.titre_sujet = titre;
  }
 
  public void setEncadrant(String encadrant) {
@@ -69,14 +73,19 @@ public class Soutenances {
  }
 
  public void setDate(String date) {
-  this.date = date;
+  this.date_soutenance = date;
  }
 
  public void setHeure(String heure) {
-  this.heure = heure;
+  this.heure_soutenance = heure;
  }
 
  public void setSalle(String salle) {
-  this.salle = salle;
+  this.salle_soutenance = salle;
+ }
+
+
+ public void setDepartement(Departement departement) {
+  this.departement = departement;
  }
 }
