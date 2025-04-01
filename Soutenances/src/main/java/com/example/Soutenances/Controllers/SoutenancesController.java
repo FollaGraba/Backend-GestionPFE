@@ -57,8 +57,7 @@ public class SoutenancesController {
     }
 
 
-    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-    @DeleteMapping("/supprimer/{id}")
+     @DeleteMapping("/supprimer/{id}")
     public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
         soutenancesService.deleteSoutenance(id);
         return ResponseEntity.ok("Soutenance supprimée avec succès");

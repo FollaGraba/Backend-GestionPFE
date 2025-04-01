@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> {
     List<Soutenances> findByDepartementId(Long departementId);
+    boolean existsById(int id);
+
 }

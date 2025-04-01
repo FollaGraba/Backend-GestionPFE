@@ -4,34 +4,43 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Entity
-@Getter
-@Setter
 @Table(name = "soutenances")
 public class Soutenances {
-       @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+ @Id
+ @GeneratedValue(strategy = GenerationType.IDENTITY)
+ private int id;
 
         @Column(name = "nom_etudiant", columnDefinition = "VARCHAR(255)")
         private String nom_etudiant;
 
-        @Column(name = "email", columnDefinition = "VARCHAR(255)")
-        private String email;
+
+ @Column(name = "email", nullable = false, length = 255)
+ private String email;
 
         @Column(name = "titre_sujet ", columnDefinition = "VARCHAR(255)")
         private String titre_sujet;
 
-        @Column(name = "encadrant", columnDefinition = "VARCHAR(255)")
-        private String encadrant;
 
-        @Column(name = "president", columnDefinition = "VARCHAR(255)")
-        private String president;
+ @Column(name = "encadrant", length = 255)
+ private String encadrant;
 
-        @Column(name = "rapporteur", columnDefinition = "VARCHAR(255)")
-        private String rapporteur;
+ @Column(name = "president", length = 255)
+ private String president;
 
-        @Column(name = "date_soutenance", columnDefinition = "VARCHAR(255)")
+ @Column(name = "rapporteur", length = 255)
+ private String rapporteur;
+
+ public String getDate_soutenance() {
+  return date_soutenance;
+ }
+
+ @Column(name = "date_soutenance", columnDefinition = "VARCHAR(255)")
         private String date_soutenance;
 
         @Column(name = "heure_soutenance", columnDefinition = "VARCHAR(255)")
@@ -43,41 +52,78 @@ public class Soutenances {
  @JoinColumn(name = "departement_id", nullable = false) // Use a foreign key for the relationship
  private Departement departement;
 
+ public int getId() {
+  return id;
+ }
 
- public void setId(Long id) {
+ public void setId(int id) {
   this.id = id;
+ }
+
+ public String getNomEtudiant() {
+  return nom_etudiant;
  }
 
  public void setNomEtudiant(String nomEtudiant) {
   this.nom_etudiant = nomEtudiant;
  }
 
+ public String getEmail() {
+  return email;
+ }
+
  public void setEmail(String email) {
   this.email = email;
+ }
+
+ public String getTitre() {
+  return titre_sujet;
  }
 
  public void setTitre(String titre) {
   this.titre_sujet = titre;
  }
 
+ public String getEncadrant() {
+  return encadrant;
+ }
+
  public void setEncadrant(String encadrant) {
   this.encadrant = encadrant;
+ }
+
+ public String getPresident() {
+  return president;
  }
 
  public void setPresident(String president) {
   this.president = president;
  }
 
+ public String getRapporteur() {
+  return rapporteur;
+ }
+
  public void setRapporteur(String rapporteur) {
   this.rapporteur = rapporteur;
  }
+
+
 
  public void setDate(String date) {
   this.date_soutenance = date;
  }
 
+ public String getHeure() {
+  return heure_soutenance;
+ }
+
  public void setHeure(String heure) {
   this.heure_soutenance = heure;
+ }
+
+ public String getSalle() {
+  return salle_soutenance;
  }
 
  public void setSalle(String salle) {

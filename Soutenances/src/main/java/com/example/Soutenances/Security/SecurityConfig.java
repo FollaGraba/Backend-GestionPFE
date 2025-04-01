@@ -3,7 +3,6 @@ package com.example.Soutenances.Security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,20 +20,26 @@ public class SecurityConfig {
     public SecurityConfig(JwtFilter jwtFilter) {
         this.jwtFilter = jwtFilter;
     }
-    // Mariem Tlatli : 3asslama maysam zidit il cors bach yaccepti il front w zidit il requete ali a3maliteha bach najouti fil base de données les soutenaces
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> cors.configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())) // ✅ Activer CORS
-                .csrf(csrf -> csrf.disable()) // Désactiver CSRF pour Postman
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration corsConfig = new CorsConfiguration();
+                    corsConfig.setAllowCredentials(true);
+                    corsConfig.addAllowedOriginPattern("http://localhost:*"); // Accepte tous les localhost avec n'importe quel port
+                    corsConfig.addAllowedHeader("*");
+                    corsConfig.addAllowedMethod("*"); // Autorise toutes les méthodes HTTP
+                    return corsConfig;
+                }))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll","/api/departement/**").permitAll() // Routes publiques (ex: login, register)
                         .requestMatchers("/api/salles/**", "/api/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Pas de session
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); //  Ajouter JwtFilter avant la validation de connexion
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -43,6 +48,4 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-
-
 }
