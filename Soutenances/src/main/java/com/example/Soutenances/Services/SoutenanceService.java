@@ -48,12 +48,12 @@ public class SoutenanceService {
     }
 
 
-    public List<Soutenances> saveAllSoutenances(List<SoutenanceDTO> dtoList) {
-        List<Soutenances> soutenances = dtoList.stream()
-                .map(this::mapToSoutenancesEntity)
-                .collect(Collectors.toList());
-        return soutenancesRepository.saveAll(soutenances);
-    }
+//    public List<Soutenances> saveAllSoutenances(List<SoutenanceDTO> dtoList) {
+//        List<Soutenances> soutenances = dtoList.stream()
+//                .map(this::mapToSoutenancesEntity)
+//                .collect(Collectors.toList());
+//        return soutenancesRepository.saveAll(soutenances);
+//    }
     // Method to get all soutenances from the database
     public List<Soutenances> getAllSoutenances() {
         return soutenancesRepository.findAll();  // Uses the method from JpaRepository to fetch all data

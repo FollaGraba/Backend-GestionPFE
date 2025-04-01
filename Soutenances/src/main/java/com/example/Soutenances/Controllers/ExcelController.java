@@ -41,29 +41,29 @@ public class ExcelController {
         }
     }
 
-    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-    @DeleteMapping("/soutenances/supprimer/{id}")
-    public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
-        excelService.deleteSoutenance(id);
-        return ResponseEntity.ok("Soutenance supprimée avec succès");
-    }
+//    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+//    @DeleteMapping("/soutenances/supprimer/{id}")
+//    public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
+//        excelService.deleteSoutenance(id);
+//        return ResponseEntity.ok("Soutenance supprimée avec succès");
+//    }
 
 
-    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-    @PutMapping("/soutenances/president/{id}")
-    public ResponseEntity<?> updatePresident(@PathVariable Long id, @RequestParam String president) {
-        Optional<Soutenances> updatedSoutenance = excelService.updatePresident(id, president);
-        return updatedSoutenance.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-    @PutMapping("/soutenances/rapporteur/{id}")
-    public ResponseEntity<?> updateRapporteur(@PathVariable Long id, @RequestParam String rapporteur) {
-        Optional<Soutenances> updatedSoutenance = excelService.updateRapporteur(id, rapporteur);
-        return updatedSoutenance.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
+//    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+//    @PutMapping("/soutenances/president/{id}")
+//    public ResponseEntity<?> updatePresident(@PathVariable Long id, @RequestParam String president) {
+//        Optional<Soutenances> updatedSoutenance = excelService.updatePresident(id, president);
+//        return updatedSoutenance.map(ResponseEntity::ok)
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
+//
+//    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+//    @PutMapping("/soutenances/rapporteur/{id}")
+//    public ResponseEntity<?> updateRapporteur(@PathVariable Long id, @RequestParam String rapporteur) {
+//        Optional<Soutenances> updatedSoutenance = excelService.updateRapporteur(id, rapporteur);
+//        return updatedSoutenance.map(ResponseEntity::ok)
+//                .orElseGet(() -> ResponseEntity.notFound().build());
+//    }
 
 
 }

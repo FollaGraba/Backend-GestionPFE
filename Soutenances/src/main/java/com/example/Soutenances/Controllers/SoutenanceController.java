@@ -20,11 +20,11 @@ public class SoutenanceController {
         this.soutenancesService = soutenanceService;
     }
 
-    @PostMapping("/saveAll")
-    public ResponseEntity<List<Soutenances>> saveAllSoutenances(@RequestBody List<SoutenanceDTO> soutenancesDTO) {
-        List<Soutenances> savedSoutenances = soutenancesService.saveAllSoutenances(soutenancesDTO);
-        return ResponseEntity.ok(savedSoutenances);
-    }
+//    @PostMapping("/saveAll")
+//    public ResponseEntity<List<Soutenances>> saveAllSoutenances(@RequestBody List<SoutenanceDTO> soutenancesDTO) {
+//        List<Soutenances> savedSoutenances = soutenancesService.saveAllSoutenances(soutenancesDTO);
+//        return ResponseEntity.ok(savedSoutenances);
+//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Soutenances>> getAllSoutenances() {
