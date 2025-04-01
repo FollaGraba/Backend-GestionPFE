@@ -2,9 +2,7 @@ package com.example.Soutenances.Controllers;
 
 import com.example.Soutenances.Entities.NomFiliere;
 import com.example.Soutenances.Entities.Soutenances;
-import com.example.Soutenances.Services.SoutenancesService;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import com.example.Soutenances.Services.UploadSoutenancesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,19 +11,18 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/api/soutenances")
-public class SoutenancesController {
+public class UploadSoutenancesController {
 
-    private static final Logger logger = Logger.getLogger(SoutenancesController.class.getName());
+    private static final Logger logger = Logger.getLogger(UploadSoutenancesController.class.getName());
 
     @Autowired
-    private SoutenancesService soutenancesService;
+    private UploadSoutenancesService soutenancesService;
 
     @PostMapping("/upload-soutenances/{departementId}/{nomFiliere}")
     @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
@@ -86,10 +83,10 @@ public class SoutenancesController {
         List<Soutenances> soutenances = soutenancesService.getSoutenancesByDepartement(departementId);
 
         if (soutenances.isEmpty()) {
-            return ResponseEntity.noContent().build(); // Return 204 if no soutenances found
+            return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(soutenances); // Return 200 with the list of soutenances
+        return ResponseEntity.ok(soutenances);
     }
 
 

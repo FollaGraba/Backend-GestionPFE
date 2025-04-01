@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,9 +20,9 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
-public class SoutenancesService {
+public class UploadSoutenancesService {
 
-    private static final Logger logger = Logger.getLogger(SoutenancesService.class.getName());
+    private static final Logger logger = Logger.getLogger(UploadSoutenancesService.class.getName());
 
     @Autowired
     private SoutenancesRepository soutenancesRepository;
@@ -90,42 +89,39 @@ public class SoutenancesService {
 
 
     public void deleteSoutenance(Long id) {
-        if (soutenancesRepository.existsById(id)) {
-            soutenancesRepository.deleteById(id);
-            logger.info("Soutenance supprimée avec succès : ID = " + id);
+       if (soutenancesRepository.existsById(id)) {
+        soutenancesRepository.deleteById(id);
+         logger.info("Soutenance supprimée avec succès : ID = " + id);
         } else {
-            throw new IllegalArgumentException("Soutenance introuvable !");
-        }
-    }
+          throw new IllegalArgumentException("Soutenance introuvable !");
+    }}
 
     public Optional<Soutenances> updatePresident(Long id, String president) {
-        Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
-        if (optionalSoutenance.isPresent()) {
-            Soutenances soutenance = optionalSoutenance.get();
-            soutenance.setPresident(president);
-            soutenancesRepository.save(soutenance);
+     Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+     if (optionalSoutenance.isPresent()) {
+          Soutenances soutenance = optionalSoutenance.get();
+           soutenance.setPresident(president);
+        soutenancesRepository.save(soutenance);
         } else {
-            throw new IllegalArgumentException("Soutenance introuvable !");
-        }
-        return optionalSoutenance;
+           throw new IllegalArgumentException("Soutenance introuvable !");
+      }
+     return optionalSoutenance;
     }
 
-    public Optional<Soutenances> updateRapporteur(Long id, String rapporteur) {
-        Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+ public Optional<Soutenances> updateRapporteur(Long id, String rapporteur) {
+  Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
         if (optionalSoutenance.isPresent()) {
-            Soutenances soutenance = optionalSoutenance.get();
+      Soutenances soutenance = optionalSoutenance.get();
             soutenance.setRapporteur(rapporteur);
-            soutenancesRepository.save(soutenance);
-        } else {
-            throw new IllegalArgumentException("Soutenance introuvable !");
-        }
-        return optionalSoutenance;
-    }
+           soutenancesRepository.save(soutenance);
+       } else {
+       throw new IllegalArgumentException("Soutenance introuvable !");
+       }
+     return optionalSoutenance;
+   }
 
     public List<Soutenances> getSoutenancesByDepartement(Long departementId) {
         return soutenancesRepository.findByDepartementId(departementId);
     }
-
-
 
 }

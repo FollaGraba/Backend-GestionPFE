@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 @RequestMapping("/api/salles")
 public class SallesDisposController {
 
-    private static final Logger logger = Logger.getLogger(com.example.Soutenances.Controllers.SoutenancesController.class.getName());
+    private static final Logger logger = Logger.getLogger(UploadSoutenancesController.class.getName());
 
     @Autowired
     private SallesDisposServices sallesDisposService;
