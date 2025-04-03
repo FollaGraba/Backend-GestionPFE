@@ -12,9 +12,11 @@ public class JwtUtil {
     private static final long EXPIRATION_TIME = 86400000; // 24h
 
     // Génération du token JWT avec email et rôle
-    public String generateToken(String email, String role) {
+    public String generateToken(String email, String role, Long id) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", role);
+        claims.put("id", id);
+        claims.put("id", id);
 
         return Jwts.builder()
                 .setClaims(claims)
