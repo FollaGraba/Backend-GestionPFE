@@ -102,4 +102,8 @@ public class SoutenanceService {
         // Sauvegarde les changements
         return soutenancesRepository.save(existingSoutenance);
     }
+    public List<Soutenances> getSoutenancesByEncadrant(String encadrant) {
+        return soutenancesRepository.findByEncadrant(encadrant);
+    }
+
 }

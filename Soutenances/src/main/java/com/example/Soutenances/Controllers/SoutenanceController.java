@@ -51,6 +51,11 @@ public class SoutenanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Or a more specific exception
         }
     }
+    @GetMapping("/ByEncadrant/{encadrant}")
+    public ResponseEntity<List<Soutenances>> getSoutenancesByEncadrant(@PathVariable String encadrant) {
+        List<Soutenances> soutenances = soutenancesService.getSoutenancesByEncadrant(encadrant);
+        return ResponseEntity.ok(soutenances);
+    }
 
 
 }

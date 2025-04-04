@@ -26,9 +26,7 @@ public class AuthService {
             throw new RuntimeException("Mot de passe incorrect !");
         }
 
-        if (!user.getRole().name().equals(loginRequest.getRole())) {
-            throw new RuntimeException("Le rôle ne correspond pas !");
-        }
+
 
         // Générer un JWT avec l'email et le rôle
         return jwtUtil.generateToken(user.getEmail(), user.getRole().name(),user.getId());

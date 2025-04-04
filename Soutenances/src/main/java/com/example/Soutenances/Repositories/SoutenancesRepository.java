@@ -14,5 +14,6 @@ public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> 
     List<Soutenances> findByFiliere(NomFiliere filiere);
 
     boolean existsById(int id);
+    List<Soutenances> findByEncadrant(String encadrant);
 
 }
