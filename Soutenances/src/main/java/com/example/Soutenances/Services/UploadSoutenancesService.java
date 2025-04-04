@@ -51,13 +51,13 @@ public class UploadSoutenancesService {
                 // Populate the soutenance fields from the Excel row
                 soutenance.setNomEtudiant(getStringCellValue(row.getCell(0)));
                 soutenance.setEmail(getStringCellValue(row.getCell(1)));
-                soutenance.setTitre(getStringCellValue(row.getCell(2)));
+                soutenance.setTitreSujet(getStringCellValue(row.getCell(2)));
                 soutenance.setEncadrant(getStringCellValue(row.getCell(3)));
                 soutenance.setPresident(getStringCellValue(row.getCell(4)));
                 soutenance.setRapporteur(getStringCellValue(row.getCell(5)));
-                soutenance.setDate(getStringCellValue(row.getCell(6)));
-                soutenance.setHeure(getStringCellValue(row.getCell(7)));
-                soutenance.setSalle(getStringCellValue(row.getCell(8)));
+                soutenance.setDateSoutenance(getStringCellValue(row.getCell(6)));
+                soutenance.setHeureSoutenance(getStringCellValue(row.getCell(7)));
+                soutenance.setSalleSoutenance(getStringCellValue(row.getCell(8)));
 
                 // Set the Departement object
                 soutenance.setDepartement(departement);
@@ -82,37 +82,37 @@ public class UploadSoutenancesService {
     }
 
 
-    public void deleteSoutenance(Long id) {
-       if (soutenancesRepository.existsById(id)) {
-        soutenancesRepository.deleteById(id);
-         logger.info("Soutenance supprimée avec succès : ID = " + id);
-        } else {
-          throw new IllegalArgumentException("Soutenance introuvable !");
-    }}
-
-    public Optional<Soutenances> updatePresident(Long id, String president) {
-     Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
-     if (optionalSoutenance.isPresent()) {
-          Soutenances soutenance = optionalSoutenance.get();
-           soutenance.setPresident(president);
-        soutenancesRepository.save(soutenance);
-        } else {
-           throw new IllegalArgumentException("Soutenance introuvable !");
-      }
-     return optionalSoutenance;
-    }
-
- public Optional<Soutenances> updateRapporteur(Long id, String rapporteur) {
-  Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
-        if (optionalSoutenance.isPresent()) {
-      Soutenances soutenance = optionalSoutenance.get();
-            soutenance.setRapporteur(rapporteur);
-           soutenancesRepository.save(soutenance);
-       } else {
-       throw new IllegalArgumentException("Soutenance introuvable !");
-       }
-     return optionalSoutenance;
-   }
+//    public void deleteSoutenance(Long id) {
+//       if (soutenancesRepository.existsById(id)) {
+//        soutenancesRepository.deleteById(id);
+//         logger.info("Soutenance supprimée avec succès : ID = " + id);
+//        } else {
+//          throw new IllegalArgumentException("Soutenance introuvable !");
+//    }}
+//
+//    public Optional<Soutenances> updatePresident(Long id, String president) {
+//     Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+//     if (optionalSoutenance.isPresent()) {
+//          Soutenances soutenance = optionalSoutenance.get();
+//           soutenance.setPresident(president);
+//        soutenancesRepository.save(soutenance);
+//        } else {
+//           throw new IllegalArgumentException("Soutenance introuvable !");
+//      }
+//     return optionalSoutenance;
+//    }
+//
+// public Optional<Soutenances> updateRapporteur(Long id, String rapporteur) {
+//  Optional<Soutenances> optionalSoutenance = soutenancesRepository.findById(id);
+//        if (optionalSoutenance.isPresent()) {
+//      Soutenances soutenance = optionalSoutenance.get();
+//            soutenance.setRapporteur(rapporteur);
+//           soutenancesRepository.save(soutenance);
+//       } else {
+//       throw new IllegalArgumentException("Soutenance introuvable !");
+//       }
+//     return optionalSoutenance;
+//   }
 
     public List<Soutenances> getSoutenancesByDepartement(Departement departement) {
         List<Soutenances> soutenances = soutenancesRepository.findByDepartement(departement);

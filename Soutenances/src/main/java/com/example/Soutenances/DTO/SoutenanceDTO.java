@@ -5,23 +5,24 @@ import lombok.Setter;
 
 
 public class SoutenanceDTO {
-    private String idSoutenance;
+
+    private int id; // Non utilisé dans le mapping, peut être supprimé si inutile
     private String nomEtudiant;
     private String emailEtudiant;
     private String titreSoutenance;
     private String idEncadrant;
     private String idPresident;
     private String idRapporteur;
-    private String dateSoutenance;
-    private String heureSoutenance;
-    private String idSalle;
+    private String date; // Renommé pour correspondre à l'entité
+    private String heure; // Renommé pour correspondre à l'entité
+    private String salle; // Renommé pour correspondre à l'entité
 
-    public String getIdSoutenance() {
-        return idSoutenance;
+    public int getId() {
+        return id;
     }
 
-    public void setIdSoutenance(String idSoutenance) {
-        this.idSoutenance = idSoutenance;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNomEtudiant() {
@@ -72,27 +73,27 @@ public class SoutenanceDTO {
         this.idRapporteur = idRapporteur;
     }
 
-    public String getDateSoutenance() {
-        return dateSoutenance;
+    public String getDate() {
+        return date;
     }
 
-    public void setDateSoutenance(String dateSoutenance) {
-        this.dateSoutenance = dateSoutenance;
+    public void setDate(String date) {
+        this.date = date;
     }
 
-    public String getHeureSoutenance() {
-        return heureSoutenance;
+    public String getHeure() {
+        return heure;
     }
 
-    public void setHeureSoutenance(String heureSoutenance) {
-        this.heureSoutenance = heureSoutenance;
+    public void setHeure(String heure) {
+        this.heure = heure;
     }
 
-    public String getIdSalle() {
-        return idSalle;
+    public String getSalle() {
+        return salle;
     }
 
-    public void setIdSalle(String idSalle) {
-        this.idSalle = idSalle;
+    public void setSalle(String salle) {
+        this.salle = salle;
     }
 }

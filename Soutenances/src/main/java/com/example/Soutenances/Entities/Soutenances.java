@@ -2,23 +2,26 @@ package com.example.Soutenances.Entities;
 
 import jakarta.persistence.*;
 
+import lombok.Getter;
+import lombok.Setter;
+
+
 @Entity
 @Table(name = "soutenances")
 public class Soutenances {
+
  @Id
  @GeneratedValue(strategy = GenerationType.IDENTITY)
- private int id;
+ private Long id; // Correction : Changement de int à Long
 
-        @Column(name = "nom_etudiant", columnDefinition = "VARCHAR(255)")
-        private String nom_etudiant;
-
+ @Column(name = "nom_etudiant", columnDefinition = "VARCHAR(255)")
+ private String nomEtudiant;
 
  @Column(name = "email", nullable = false, length = 255)
  private String email;
 
-        @Column(name = "titre_sujet ", columnDefinition = "VARCHAR(255)")
-        private String titre_sujet;
-
+ @Column(name = "titre_sujet", columnDefinition = "VARCHAR(255)") // Correction : Suppression de l'espace indésirable
+ private String titreSujet;
 
  @Column(name = "encadrant", length = 255)
  private String encadrant;
@@ -29,65 +32,37 @@ public class Soutenances {
  @Column(name = "rapporteur", length = 255)
  private String rapporteur;
 
- public String getDate_soutenance() {
-  return date_soutenance;
- }
-
  @Column(name = "date_soutenance", columnDefinition = "VARCHAR(255)")
-        private String date_soutenance;
+ private String dateSoutenance;
 
-        @Column(name = "heure_soutenance", columnDefinition = "VARCHAR(255)")
-        private String heure_soutenance;
+ @Column(name = "heure_soutenance", columnDefinition = "VARCHAR(255)")
+ private String heureSoutenance;
 
-        @Column(name = "salle", columnDefinition = "VARCHAR(255)")
-        private String salle_soutenance;
+ @Column(name = "salle_soutenance", columnDefinition = "VARCHAR(255)")
+ private String salleSoutenance;
 
- public String getNomDept() {
-  return nomDept;
- }
 
- public void setNomDept(String nomDept) {
-  this.nomDept = nomDept;
- }
-
- public void setDepartement(Departement departement) {
-  this.departement = departement;
- }
 
  @ManyToOne
  @JoinColumn(name = "departement_id", nullable = false)
  private Departement departement;
 
- @Column(name = "nom_departement", nullable = false)
- private String nomDept;
- @Column(name = "filiere", nullable = false)
- @Enumerated(EnumType.STRING)
-  private NomFiliere filiere;
 
- // Getters et Setters
- public NomFiliere getFiliere() {
-  return filiere;
- }
+ public Long getId() {
 
- public void setFiliere(NomFiliere filiere) {
-  this.filiere = filiere;
- }
-
-
- public int getId() {
   return id;
  }
 
- public void setId(int id) {
+ public void setId(Long id) {
   this.id = id;
  }
 
  public String getNomEtudiant() {
-  return nom_etudiant;
+  return nomEtudiant;
  }
 
  public void setNomEtudiant(String nomEtudiant) {
-  this.nom_etudiant = nomEtudiant;
+  this.nomEtudiant = nomEtudiant;
  }
 
  public String getEmail() {
@@ -98,12 +73,12 @@ public class Soutenances {
   this.email = email;
  }
 
- public String getTitre() {
-  return titre_sujet;
+ public String getTitreSujet() {
+  return titreSujet;
  }
 
- public void setTitre(String titre) {
-  this.titre_sujet = titre;
+ public void setTitreSujet(String titreSujet) {
+  this.titreSujet = titreSujet;
  }
 
  public String getEncadrant() {
@@ -130,29 +105,37 @@ public class Soutenances {
   this.rapporteur = rapporteur;
  }
 
-
-
- public void setDate(String date) {
-  this.date_soutenance = date;
+ public String getDateSoutenance() {
+  return dateSoutenance;
  }
 
- public String getHeure() {
-  return heure_soutenance;
+ public void setDateSoutenance(String dateSoutenance) {
+  this.dateSoutenance = dateSoutenance;
  }
 
- public void setHeure(String heure) {
-  this.heure_soutenance = heure;
+ public String getHeureSoutenance() {
+  return heureSoutenance;
  }
 
- public String getSalle() {
-  return salle_soutenance;
+ public void setHeureSoutenance(String heureSoutenance) {
+  this.heureSoutenance = heureSoutenance;
  }
 
- public void setSalle(String salle) {
-  this.salle_soutenance = salle;
+ public String getSalleSoutenance() {
+  return salleSoutenance;
+ }
+
+ public void setSalleSoutenance(String salleSoutenance) {
+  this.salleSoutenance = salleSoutenance;
+ }
+
+ public Departement getDepartement() {
+  return departement;
  }
 
 
-
+ public void setDepartement(Departement departement) {
+  this.departement = departement;
+ }
 
 }
