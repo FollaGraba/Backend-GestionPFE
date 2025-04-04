@@ -13,10 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Service
@@ -63,8 +60,9 @@ public class UploadSoutenancesService {
                 soutenance.setSalleSoutenance(getStringCellValue(row.getCell(8)));
 
                 // Set the Departement object
-                soutenance.setDepartement(departement); // Set the department reference
-
+                soutenance.setDepartement(departement);
+                soutenance.setNomDept(departement.getNomDept().name());
+                soutenance.setFiliere(nomFiliere);
                 soutenancesList.add(soutenance);
             }
 
@@ -75,16 +73,12 @@ public class UploadSoutenancesService {
             throw new RuntimeException("Erreur lors de l'importation du fichier.", e);
         }
     }
-
-
-
-
     // Utility method to safely get string cell values
     private String getStringCellValue(Cell cell) {
         if (cell != null && cell.getCellType() == CellType.STRING) {
             return cell.getStringCellValue();
         }
-        return null; // Return null if the cell is not a string or is null
+        return null;
     }
 
 
@@ -120,8 +114,22 @@ public class UploadSoutenancesService {
 //     return optionalSoutenance;
 //   }
 
-    public List<Soutenances> getSoutenancesByDepartement(Long departementId) {
-        return soutenancesRepository.findByDepartementId(departementId);
+    public List<Soutenances> getSoutenancesByDepartement(Departement departement) {
+        List<Soutenances> soutenances = soutenancesRepository.findByDepartement(departement);
+        if (soutenances.isEmpty()) {
+            throw new RuntimeException("Aucune soutenance trouvée pour le département : " + departement.getNomDept());
+        }
+        return soutenances;
     }
+
+    public List<Soutenances> findSoutenancesByFiliere(NomFiliere filiere) {
+        List<Soutenances> soutenances = soutenancesRepository.findByFiliere(filiere);
+        if (soutenances.isEmpty()) {
+            throw new RuntimeException("Aucune soutenance trouvée pour la filière : " + filiere);
+        }
+        return soutenances;
+    }
+
+
 
 }

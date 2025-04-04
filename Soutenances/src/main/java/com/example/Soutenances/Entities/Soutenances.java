@@ -1,8 +1,10 @@
 package com.example.Soutenances.Entities;
 
 import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.Setter;
+
 
 @Entity
 @Table(name = "soutenances")
@@ -39,11 +41,15 @@ public class Soutenances {
  @Column(name = "salle_soutenance", columnDefinition = "VARCHAR(255)")
  private String salleSoutenance;
 
+
+
  @ManyToOne
  @JoinColumn(name = "departement_id", nullable = false)
  private Departement departement;
 
+
  public Long getId() {
+
   return id;
  }
 
@@ -127,7 +133,9 @@ public class Soutenances {
   return departement;
  }
 
+
  public void setDepartement(Departement departement) {
   this.departement = departement;
  }
+
 }

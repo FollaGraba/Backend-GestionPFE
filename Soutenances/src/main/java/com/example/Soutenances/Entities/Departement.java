@@ -41,4 +41,6 @@ public class Departement {
     public void setFilieres(List<NomFiliere> filieres) {
         this.filieres = filieres;
     }
+
+
 }
