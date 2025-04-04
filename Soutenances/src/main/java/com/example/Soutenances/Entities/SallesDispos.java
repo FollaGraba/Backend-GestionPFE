@@ -16,12 +16,35 @@ public class SallesDispos {
     private String date;
     private String salle;
 
+    public Long getIdSalle() {
+        return idSalle;
+    }
+
+    public Departement getDepartement() {
+        return departement;
+    }
+
+    public String getDate() {
+        return date;
+    }
+    public String getSalle() {
+        return salle;
+    }
+
+    @ManyToOne // Définir la relation avec Departement
+    @JoinColumn(name = "departement_id", nullable = false)
+    private Departement departement;
+
+
     public void setDate(String cellValue) {
-        this.date = cellValue; // Ensure you are assigning the value
+        this.date = cellValue; // Assurez-vous d'assigner la valeur
     }
 
     public void setSalle(String cellValue) {
-        this.salle = cellValue; // Ensure you are assigning the value
+        this.salle = cellValue; // Assurez-vous d'assigner la valeur
     }
 
+    public void setDepartement(Departement departement) {
+        this.departement = departement;
+    }
 }

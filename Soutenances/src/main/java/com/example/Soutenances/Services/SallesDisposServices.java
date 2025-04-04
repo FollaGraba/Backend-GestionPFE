@@ -1,6 +1,9 @@
 package com.example.Soutenances.Services;
 
+import com.example.Soutenances.Entities.Departement;
+import com.example.Soutenances.Entities.NomDepartement;
 import com.example.Soutenances.Entities.SallesDispos;
+import com.example.Soutenances.Repositories.DepartementRepository;
 import com.example.Soutenances.Repositories.SallesDisposRepository;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -13,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 @Service
@@ -23,26 +27,33 @@ public class SallesDisposServices {
     @Autowired
     private SallesDisposRepository sallesDisposRepository;
 
-    public void saveSallesDisposFile(MultipartFile file) {
+    @Autowired
+    private DepartementRepository departementRepository; // Injecter le dépôt de départements
+
+    public String saveSallesDisposFile(MultipartFile file, String nomDept) {
         try (InputStream inputStream = file.getInputStream();
              Workbook workbook = new XSSFWorkbook(inputStream)) {
 
             Sheet sheet = workbook.getSheetAt(0);
 
-            // Vérification si le fichier Excel est vide
             if (sheet.getPhysicalNumberOfRows() <= 1) {
                 throw new RuntimeException("Le fichier Excel est vide !");
             }
 
-            saveSallesDispos(sheet);
+            // Trouver le département par son nom
+            Departement departement = departementRepository.findByNomDept(NomDepartement.valueOf(nomDept.toUpperCase()))
+                    .orElseThrow(() -> new RuntimeException("Département non trouvé pour le nom: " +  nomDept));
 
+            // Enregistrer les salles et retourner le nom du département
+            saveSallesDispos(sheet, departement);
+            return departement.getNomDept().name();
         } catch (Exception e) {
-            logger.severe("Erreur lors de l'importation des soutenances : " + e.getMessage());
+            logger.severe("Erreur lors de l'importation des salles dispos : " + e.getMessage());
             throw new RuntimeException("Erreur lors de la lecture du fichier Excel", e);
         }
     }
 
-    private void saveSallesDispos(Sheet sheet) {
+    private void saveSallesDispos(Sheet sheet, Departement departement) {
         Iterator<Row> rowIterator = sheet.iterator();
         rowIterator.next(); // Ignorer l'en-tête
         List<SallesDispos> sallesList = new ArrayList<>();
@@ -54,10 +65,12 @@ public class SallesDisposServices {
             String dateValue = getCellValue(row.getCell(0)); // Colonne Date
             String salleValue = getCellValue(row.getCell(1)); // Colonne Salle
 
-            // Vérification si les valeurs sont valides avant de les enregistrer
+            // Vérifier si les valeurs sont valides avant de les enregistrer
             if (dateValue != null && salleValue != null) {
                 salle.setDate(dateValue.trim()); // Suppression des espaces
                 salle.setSalle(salleValue.trim());
+                salle.setDepartement(departement); // Définir le département
+
                 sallesList.add(salle);
             } else {
                 logger.warning("Ligne ignorée : données incomplètes (Date: " + dateValue + ", Salle: " + salleValue + ")");
@@ -71,6 +84,8 @@ public class SallesDisposServices {
             logger.warning("Aucune salle valide à enregistrer.");
         }
     }
+
+
 
     private String getCellValue(Cell cell) {
         if (cell == null) return null; // Éviter NullPointerException
@@ -91,4 +106,22 @@ public class SallesDisposServices {
                 return null; // Retourner null pour les types non pris en charge
         }
     }
+    // Method to get all SallesDispos
+    public List<SallesDispos> getAllSallesDispos() {
+        return sallesDisposRepository.findAll();
+    }
+
+
+    public List<SallesDispos> getSallesByDepartement(String nomDept) {
+        Optional<Departement> departement = departementRepository.findByNomDept(NomDepartement.valueOf(nomDept.toUpperCase()));
+
+        if (!departement.isPresent()) {
+            throw new RuntimeException("Département non trouvé pour le nom: " + nomDept);
+        }
+
+        return sallesDisposRepository.findByDepartement(departement.get());
+    }
+
+
+
 }

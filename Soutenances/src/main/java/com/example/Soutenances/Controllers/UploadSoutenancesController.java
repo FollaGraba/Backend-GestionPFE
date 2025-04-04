@@ -1,7 +1,9 @@
 package com.example.Soutenances.Controllers;
 
+import com.example.Soutenances.Entities.Departement;
 import com.example.Soutenances.Entities.NomFiliere;
 import com.example.Soutenances.Entities.Soutenances;
+import com.example.Soutenances.Repositories.DepartementRepository;
 import com.example.Soutenances.Services.UploadSoutenancesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/soutenances")
@@ -23,6 +28,8 @@ public class UploadSoutenancesController {
 
     @Autowired
     private UploadSoutenancesService soutenancesService;
+    @Autowired
+    private DepartementRepository departementRepository;
 
     @PostMapping("/upload-soutenances/{departementId}/{nomFiliere}")
     @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
@@ -54,7 +61,8 @@ public class UploadSoutenancesController {
     }
 
 
-     @DeleteMapping("/supprimer/{id}")
+
+    @DeleteMapping("/supprimer/{id}")
     public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
         soutenancesService.deleteSoutenance(id);
         return ResponseEntity.ok("Soutenance supprimée avec succès");
@@ -77,17 +85,73 @@ public class UploadSoutenancesController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
 
     }
-    @GetMapping("/departement/{departementId}")
-    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-    public ResponseEntity<List<Soutenances>> getSoutenancesByDepartement(@PathVariable Long departementId) {
-        List<Soutenances> soutenances = soutenancesService.getSoutenancesByDepartement(departementId);
 
-        if (soutenances.isEmpty()) {
+    @GetMapping("departement/{departementId}")
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    public ResponseEntity<List<Map<String, Object>>> getSoutenancesByDepartement(@PathVariable Long departementId) {
+        // Récupérer le département par son ID
+        Departement departement = departementRepository.findById(departementId)
+                .orElseThrow(() -> new RuntimeException("Département non trouvé"));
+
+        List<Soutenances> soutenances;
+        try {
+            soutenances = soutenancesService.getSoutenancesByDepartement(departement);
+
+            List<Map<String, Object>> response = soutenances.stream().map(soutenancesItem -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", soutenancesItem.getId());
+                map.put("nomEtudiant", soutenancesItem.getNomEtudiant());
+                map.put("email", soutenancesItem.getEmail());
+                map.put("titreSujet", soutenancesItem.getTitre());
+                map.put("encadrant", soutenancesItem.getEncadrant());
+                map.put("president", soutenancesItem.getPresident());
+                map.put("rapporteur", soutenancesItem.getRapporteur());
+                map.put("dateSoutenance", soutenancesItem.getDate_soutenance());
+                map.put("heureSoutenance", soutenancesItem.getHeure());
+                map.put("salle", soutenancesItem.getSalle());
+                map.put("filiere", soutenancesItem.getFiliere().name()); // Obtention du nom de la filière
+
+                return map;
+            }).collect(Collectors.toList());
+
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
             return ResponseEntity.noContent().build();
         }
-
-        return ResponseEntity.ok(soutenances);
     }
+
+
+    @GetMapping("filiere/{nomFiliere}")
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    public ResponseEntity<List<Map<String, Object>>> getSoutenancesByFiliere(@PathVariable String nomFiliere) {
+        List<Soutenances> soutenances;
+        try {
+            soutenances = soutenancesService.findSoutenancesByFiliere(NomFiliere.valueOf(nomFiliere));
+
+            List<Map<String, Object>> response = soutenances.stream().map(soutenancesItem -> {
+                Map<String, Object> map = new HashMap<>();
+                map.put("id", soutenancesItem.getId());
+                map.put("nomEtudiant", soutenancesItem.getNomEtudiant());
+                map.put("email", soutenancesItem.getEmail());
+                map.put("titreSujet", soutenancesItem.getTitre());
+                map.put("encadrant", soutenancesItem.getEncadrant());
+                map.put("president", soutenancesItem.getPresident());
+                map.put("rapporteur", soutenancesItem.getRapporteur());
+                map.put("dateSoutenance", soutenancesItem.getDate_soutenance());
+                map.put("heureSoutenance", soutenancesItem.getHeure());
+                map.put("salle", soutenancesItem.getSalle());
+                map.put("nomDepartement", soutenancesItem.getNomDept());
+
+                return map;
+            }).collect(Collectors.toList());
+
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            return ResponseEntity.noContent().build();
+        }
+    }
+
+
 
 
 }

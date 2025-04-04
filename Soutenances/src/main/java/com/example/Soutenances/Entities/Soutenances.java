@@ -1,13 +1,6 @@
 package com.example.Soutenances.Entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Entity
 @Table(name = "soutenances")
@@ -48,9 +41,38 @@ public class Soutenances {
 
         @Column(name = "salle", columnDefinition = "VARCHAR(255)")
         private String salle_soutenance;
+
+ public String getNomDept() {
+  return nomDept;
+ }
+
+ public void setNomDept(String nomDept) {
+  this.nomDept = nomDept;
+ }
+
+ public void setDepartement(Departement departement) {
+  this.departement = departement;
+ }
+
  @ManyToOne
- @JoinColumn(name = "departement_id", nullable = false) // Use a foreign key for the relationship
+ @JoinColumn(name = "departement_id", nullable = false)
  private Departement departement;
+
+ @Column(name = "nom_departement", nullable = false)
+ private String nomDept;
+ @Column(name = "filiere", nullable = false)
+ @Enumerated(EnumType.STRING)
+  private NomFiliere filiere;
+
+ // Getters et Setters
+ public NomFiliere getFiliere() {
+  return filiere;
+ }
+
+ public void setFiliere(NomFiliere filiere) {
+  this.filiere = filiere;
+ }
+
 
  public int getId() {
   return id;
@@ -131,7 +153,6 @@ public class Soutenances {
  }
 
 
- public void setDepartement(Departement departement) {
-  this.departement = departement;
- }
+
+
 }
