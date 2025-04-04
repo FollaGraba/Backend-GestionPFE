@@ -5,7 +5,6 @@ import com.example.Soutenances.Entities.Soutenances;
 import com.example.Soutenances.Services.SoutenanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,43 +13,34 @@ import java.util.List;
 @RequestMapping("/api/soutenance")
 public class SoutenanceController {
 
-    private final SoutenanceService soutenancesService;
+    private final SoutenanceService soutenanceService;
 
     public SoutenanceController(SoutenanceService soutenanceService) {
-        this.soutenancesService = soutenanceService;
+        this.soutenanceService = soutenanceService;
     }
-
-//    @PostMapping("/saveAll")
-//    public ResponseEntity<List<Soutenances>> saveAllSoutenances(@RequestBody List<SoutenanceDTO> soutenancesDTO) {
-//        List<Soutenances> savedSoutenances = soutenancesService.saveAllSoutenances(soutenancesDTO);
-//        return ResponseEntity.ok(savedSoutenances);
-//    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Soutenances>> getAllSoutenances() {
-        return ResponseEntity.ok(soutenancesService.getAllSoutenances());
+        return ResponseEntity.ok(soutenanceService.getAllSoutenances());
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteSoutenance(@PathVariable int id) {
+    public ResponseEntity<String> deleteSoutenance(@PathVariable Long id) { // Correction : Changement de int à Long
         try {
-            soutenancesService.deleteSoutenance(id);
+            soutenanceService.deleteSoutenance(id);
             return ResponseEntity.ok("Soutenance supprimée avec succès !");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    // End-point pour la mise à jour de la soutenance
     @PutMapping("/update/{id}")
-    public ResponseEntity<Soutenances> updateSoutenance(@PathVariable int id, @RequestBody SoutenanceDTO soutenanceDTO) {
+    public ResponseEntity<Soutenances> updateSoutenance(@PathVariable Long id, @RequestBody SoutenanceDTO soutenanceDTO) { // Correction : Changement de int à Long
         try {
-            Soutenances updatedSoutenance = soutenancesService.updateSoutenance(id, soutenanceDTO);
+            Soutenances updatedSoutenance = soutenanceService.updateSoutenance(id, soutenanceDTO);
             return ResponseEntity.ok(updatedSoutenance);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);  // Or a more specific exception
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Ou une exception plus spécifique
         }
     }
-
-
 }

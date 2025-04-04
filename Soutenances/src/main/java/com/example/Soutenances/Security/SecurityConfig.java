@@ -34,8 +34,8 @@ public class SecurityConfig {
                 }))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll","/api/departement/**").permitAll() // Routes publiques (ex: login, register)
-                        .requestMatchers("/api/salles/**", "/api/soutenances/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
+                        .requestMatchers("/api/auth/**","/api/disponibilites/ajouter" , "/api/soutenance/saveAll","/api/soutenance/all","/api/departement/**", "/api/soutenance/delete/**","/api/soutenance/update/**").permitAll() // Routes publiques (ex: login, register)
+                        .requestMatchers("/api/salles/**", "/api/soutenance/**").hasAuthority("ADMINISTRATEUR") // Seul ADMINISTRATEUR peut accéder
                         .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
