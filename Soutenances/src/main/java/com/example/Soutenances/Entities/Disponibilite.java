@@ -1,23 +1,24 @@
 package com.example.Soutenances.Entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+
+import java.time.LocalDateTime;
 import java.util.Set;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "disponibilites")
 public class Disponibilite {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long idProfesseur;
 
-    @OneToMany(mappedBy = "disponibilite", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<DisponibiliteDate> datesDisponibles;
+    @ElementCollection
+    private Set<LocalDateTime> datesDisponibles; // Liste des dates et heures disponibles
 
     // Getters et Setters
-
     public Long getId() {
         return id;
     }
@@ -34,11 +35,12 @@ public class Disponibilite {
         this.idProfesseur = idProfesseur;
     }
 
-    public Set<DisponibiliteDate> getDatesDisponibles() {
+    public Set<LocalDateTime> getDatesDisponibles() {
         return datesDisponibles;
     }
 
-    public void setDatesDisponibles(Set<DisponibiliteDate> datesDisponibles) {
+    public void setDatesDisponibles(Set<LocalDateTime> datesDisponibles) {
         this.datesDisponibles = datesDisponibles;
     }
 }
+
