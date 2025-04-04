@@ -62,31 +62,31 @@ public class UploadSoutenancesController {
 
 
 
-//     @DeleteMapping("/supprimer/{id}")
-//    public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
-//        soutenancesService.deleteSoutenance(id);
-//        return ResponseEntity.ok("Soutenance supprimée avec succès");
-//    }
-//
+    @DeleteMapping("/supprimer/{id}")
+    public ResponseEntity<?> deleteSoutenance(@PathVariable Long id) {
+        soutenancesService.deleteSoutenance(id);
+        return ResponseEntity.ok("Soutenance supprimée avec succès");
+    }
 
-//    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-//    @PutMapping("/president/{id}")
-//    public ResponseEntity<?> updatePresident(@PathVariable Long id, @RequestParam String president) {
-//        Optional<Soutenances> updatedSoutenance = soutenancesService.updatePresident(id, president);
-//        return updatedSoutenance.map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//    }
-//
-//    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
-//    @PutMapping("/rapporteur/{id}")
-//    public ResponseEntity<?> updateRapporteur(@PathVariable Long id, @RequestParam String rapporteur) {
-//        Optional<Soutenances> updatedSoutenance = soutenancesService.updateRapporteur(id, rapporteur);
-//        return updatedSoutenance.map(ResponseEntity::ok)
-//                .orElseGet(() -> ResponseEntity.notFound().build());
-//
-//    }
-    @GetMapping("/departement/{departementId}")
 
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    @PutMapping("/president/{id}")
+    public ResponseEntity<?> updatePresident(@PathVariable Long id, @RequestParam String president) {
+        Optional<Soutenances> updatedSoutenance = soutenancesService.updatePresident(id, president);
+        return updatedSoutenance.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
+    @PutMapping("/rapporteur/{id}")
+    public ResponseEntity<?> updateRapporteur(@PathVariable Long id, @RequestParam String rapporteur) {
+        Optional<Soutenances> updatedSoutenance = soutenancesService.updateRapporteur(id, rapporteur);
+        return updatedSoutenance.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+
+    }
+
+    @GetMapping("departement/{departementId}")
     @PreAuthorize("hasAuthority('ADMINISTRATEUR')")
     public ResponseEntity<List<Map<String, Object>>> getSoutenancesByDepartement(@PathVariable Long departementId) {
         // Récupérer le département par son ID

@@ -21,9 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/salles")
 public class SallesDisposController {
 
-    private static final Logger logger = Logger.getLogger(SoutenanceController.class.getName());
-
-
+    private static final Logger logger = Logger.getLogger(SallesDisposController.class.getName());
 
     @Autowired
     private SallesDisposServices sallesDisposService;

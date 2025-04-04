@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
+public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> {
+    List<Soutenances> findByDepartement(Departement departement);
+    List<Soutenances> findByFiliere(NomFiliere filiere);
 
-public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> { // Correction : Changement de int à Long
-    List<Soutenances> findByDepartementId(Long departementId);
-    boolean existsById(Long id); // Correction : Changement de int à Long
+    boolean existsById(int id);
+
 }
-
