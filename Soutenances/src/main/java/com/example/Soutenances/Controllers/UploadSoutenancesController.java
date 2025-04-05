@@ -36,7 +36,7 @@ public class UploadSoutenancesController {
     public ResponseEntity<String> uploadSoutenancesFile(
             @RequestParam("file") MultipartFile file,
             @PathVariable Long departementId,
-            @PathVariable NomFiliere nomFiliere) {
+            @PathVariable String nomFiliere) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         logger.info("User: " + authentication.getName() + ", Roles: " + authentication.getAuthorities());
 
@@ -52,7 +52,7 @@ public class UploadSoutenancesController {
             }
 
             // Call the service to process the file
-            soutenancesService.saveSoutenancesFile(file, departementId, nomFiliere);
+            soutenancesService.saveSoutenancesFile(file, departementId, NomFiliere.valueOf(nomFiliere));
             return ResponseEntity.ok("Fichier importé avec succès !");
         } catch (Exception e) {
             logger.severe("Erreur lors de l'importation du fichier de soutenance : " + e.getMessage());
