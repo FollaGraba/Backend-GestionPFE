@@ -17,6 +17,7 @@ public class Departement {
     @Enumerated(EnumType.STRING)
     private List<NomFiliere> filieres;
 
+
     // Getters et Setters
     public Long getId() {
         return id;
