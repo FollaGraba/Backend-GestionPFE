@@ -159,4 +159,22 @@ public class Soutenances {
   this.departement = departement;
  }
 
+ @Override
+ public String toString() {
+  return "Soutenances{" +
+          "id=" + id +
+          ", nomEtudiant='" + nomEtudiant + '\'' +
+          ", email='" + email + '\'' +
+          ", titreSujet='" + titreSujet + '\'' +
+          ", encadrant='" + encadrant + '\'' +
+          ", president='" + president + '\'' +
+          ", rapporteur='" + rapporteur + '\'' +
+          ", dateSoutenance='" + dateSoutenance + '\'' +
+          ", heureSoutenance='" + heureSoutenance + '\'' +
+          ", salleSoutenance='" + salleSoutenance + '\'' +
+          ", nomDept='" + nomDept + '\'' +
+          ", filiere=" + filiere +
+          ", departement=" + departement +
+          '}';
+ }
 }

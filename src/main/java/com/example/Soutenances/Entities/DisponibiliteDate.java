@@ -52,4 +52,14 @@ public class DisponibiliteDate {
     public void setDisponibilite(Disponibilite disponibilite) {
         this.disponibilite = disponibilite;
     }
+
+    @Override
+    public String toString() {
+        return "DisponibiliteDate{" +
+                "id=" + id +
+                ", jour='" + jour + '\'' +
+                ", session='" + session + '\'' +
+                ", disponibilite=" + disponibilite +
+                '}';
+    }
 }

@@ -33,4 +33,6 @@ public class DureeDepartementService {
         existing.setDate_fin(newData.getDate_fin());
         return repository.save(existing);
     }
+
+
 }

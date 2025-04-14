@@ -2,6 +2,7 @@ package com.example.Soutenances.Controllers;
 
 import com.example.Soutenances.DTO.SoutenanceDTO;
 import com.example.Soutenances.Entities.Soutenances;
+import com.example.Soutenances.Services.AttribuerService;
 import com.example.Soutenances.Services.SoutenanceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,12 @@ public class SoutenanceController {
 
     private final SoutenanceService soutenanceService;
 
-    public SoutenanceController(SoutenanceService soutenanceService) {
+    private final AttribuerService attribuerService;
+
+    public SoutenanceController(SoutenanceService soutenanceService , AttribuerService attribuerService) {
         this.soutenanceService = soutenanceService;
+        this.attribuerService = attribuerService;
+
     }
 
     @GetMapping("/all")
@@ -52,5 +57,9 @@ public class SoutenanceController {
     @GetMapping("/by-username/{username}")
     public List<Soutenances> getSoutenancesByUsername(@PathVariable String username) {
         return soutenanceService.getSoutenancesByUsername(username);
+    }
+    @GetMapping("/test/{d}")
+    public String geAlgo(@PathVariable String d) {
+        return attribuerService.Attribuer(d);
     }
 }

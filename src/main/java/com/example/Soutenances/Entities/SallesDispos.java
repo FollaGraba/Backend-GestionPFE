@@ -47,4 +47,14 @@ public class SallesDispos {
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
+
+    @Override
+    public String toString() {
+        return "SallesDispos{" +
+                "idSalle=" + idSalle +
+                ", date='" + date + '\'' +
+                ", salle='" + salle + '\'' +
+                ", departement=" + departement +
+                '}';
+    }
 }

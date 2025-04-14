@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface SallesDisposRepository extends JpaRepository<SallesDispos, Long> {
     List<SallesDispos> findByDepartement(Departement departement);
     List<SallesDispos> findAll();
+    List<SallesDispos> findByDate(String date);
 
 }

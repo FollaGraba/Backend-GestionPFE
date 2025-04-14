@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DisponibiliteDateRepository extends JpaRepository<DisponibiliteDate, Long> {
 
@@ -15,5 +17,7 @@ public interface DisponibiliteDateRepository extends JpaRepository<Disponibilite
     @Transactional
     @Query("DELETE FROM DisponibiliteDate d WHERE d.disponibilite.id = :disponibiliteId")
     void deleteByDisponibiliteId(@Param("disponibiliteId") Long disponibiliteId);
+
+    List<DisponibiliteDate> findByJourAndSession(String jour, String creneau);
 }
 
