@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 
 @Entity
 @Table(name = "soutenances")
@@ -41,12 +43,16 @@ public class Soutenances {
  @Column(name = "salle_soutenance", columnDefinition = "VARCHAR(255)")
  private String salleSoutenance;
 
+ @Column(name = "nom_departement", columnDefinition = "VARCHAR(255)" , nullable = false)
+ private String nomDept;
 
+ @Column(name = "filiere", columnDefinition = "VARCHAR(255)" , nullable = false)
+ @Enumerated(EnumType.STRING)
+ private NomFiliere filiere;
 
  @ManyToOne
  @JoinColumn(name = "departement_id", nullable = false)
  private Departement departement;
-
 
  public Long getId() {
 
@@ -133,6 +139,21 @@ public class Soutenances {
   return departement;
  }
 
+ public String getNomDept() {
+  return nomDept;
+ }
+
+ public void setNomDept(String nomDept) {
+  this.nomDept = nomDept;
+ }
+
+ public NomFiliere getFiliere() {
+  return filiere;
+ }
+
+ public void setFiliere(NomFiliere filiere) {
+  this.filiere = filiere;
+ }
 
  public void setDepartement(Departement departement) {
   this.departement = departement;

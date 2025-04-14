@@ -61,8 +61,8 @@ public class UploadSoutenancesService {
 
                 // Set the Departement object
                 soutenance.setDepartement(departement);
-//                soutenance.setNomDept(departement.getNomDept().name());
-              //  soutenance.setFiliere(nomFiliere);
+               soutenance.setNomDept(departement.getNomDept().name());
+                soutenance.setFiliere(nomFiliere);
                 soutenancesList.add(soutenance);
             }
 
