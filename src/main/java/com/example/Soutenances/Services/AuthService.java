@@ -29,6 +29,6 @@ public class AuthService {
 
 
         // Générer un JWT avec l'email et le rôle
-        return jwtUtil.generateToken(user.getEmail(), user.getRole().name(),user.getId());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole().name(),user.getId() , user.getUsername());
     }
 }
