@@ -49,5 +49,8 @@ public class SoutenanceController {
         List<Soutenances> soutenances = soutenanceService.getSoutenancesByEncadrant(encadrant);
         return ResponseEntity.ok(soutenances);
     }
-
+    @GetMapping("/by-username/{username}")
+    public List<Soutenances> getSoutenancesByUsername(@PathVariable String username) {
+        return soutenanceService.getSoutenancesByUsername(username);
+    }
 }

@@ -14,6 +14,8 @@ public interface SoutenancesRepository extends JpaRepository<Soutenances, Long> 
     List<Soutenances> findByDepartementId(Long departementId);
     boolean existsById(Long id); // Correction : Changement de int à Long
     List<Soutenances> findByEncadrant(String encadrant);
+    // 👉 Méthode personnalisée pour chercher par username dans encadrant, rapporteur ou président
+    List<Soutenances> findByEncadrantOrRapporteurOrPresident(String encadrant, String rapporteur, String president);
 
 }
 

@@ -69,4 +69,9 @@ public class SoutenanceService {
     public List<Soutenances> getSoutenancesByEncadrant(String encadrant) {
         return soutenancesRepository.findByEncadrant(encadrant);
     }
+
+    public List<Soutenances> getSoutenancesByUsername(String username) {
+        return soutenancesRepository.findByEncadrantOrRapporteurOrPresident(username, username, username);
+    }
+
 }
