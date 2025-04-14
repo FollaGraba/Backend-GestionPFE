@@ -1,0 +1,58 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class User {
+    - Long idUser
+    - String email
+    - String password
+    - Role role
+}
+
+enum Role {
+    PROFESSEUR
+    CHEF_DEPARTEMENT
+    ADMINISTRATEUR
+}
+
+class Soutenances {
+    - Long id_soutenance
+    - String nomEtudiant
+    - String emailEtudiant
+    - String titre
+    - String encadrant
+    - String president
+    - String rapporteur
+    - String date
+    - String heure
+    - String salle
+}
+
+class SallesDispos {
+    - Long idSalle
+    - String date
+    - String salle
+}
+
+class Disponibilite {
+    - Long id
+    - Long idProfesseur
+    - Set<LocalDateTime> datesDisponibles
+}
+class Departement {
+    - Long id
+    - String nom
+}
+
+class Filiere {
+    - Long id
+    - String nom
+}
+
+User "3" -- "*" Soutenances : "appartient"
+User "1" -- "*" Disponibilite : "possède"
+Soutenances "*" -- "1" SallesDispos : "se déroule dans"
+
+Departement "1" -- "*" Filiere : "compose"
+Departement "1" -- "*" SallesDispos : "appartient à"
+
+@enduml
