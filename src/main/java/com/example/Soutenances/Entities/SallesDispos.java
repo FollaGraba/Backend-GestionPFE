@@ -16,6 +16,10 @@ public class SallesDispos {
     private String date;
     private String salle;
 
+    @ManyToOne // Définir la relation avec Departement
+    @JoinColumn(name = "departement_id", nullable = false)
+    private Departement departement;
+
     public Long getIdSalle() {
         return idSalle;
     }
@@ -31,9 +35,7 @@ public class SallesDispos {
         return salle;
     }
 
-    @ManyToOne // Définir la relation avec Departement
-    @JoinColumn(name = "departement_id", nullable = false)
-    private Departement departement;
+
 
 
     public void setDate(String cellValue) {

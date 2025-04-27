@@ -62,4 +62,9 @@ public class SoutenanceController {
     public String geAlgo(@PathVariable String d) {
         return attribuerService.Attribuer(d);
     }
+
+//    @PostMapping("/test2/{departement}")
+//    public String attribuerSoutenances(@PathVariable String departement) {
+//        return attribuerService.Attribuer(departement);
+//    }
 }
